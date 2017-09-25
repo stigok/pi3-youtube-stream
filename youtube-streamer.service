@@ -1,0 +1,15 @@
+[Unit]
+Description=Stream live from Pi Camera to YouTube
+
+[Service]
+DynamicUser=true
+Group=video
+EnvironmentFile=/opt/youtube-streamer/streamer.env
+ExecStart=/opt/youtube-streamer/stream-video.sh
+# Where audio.sdp is located
+WorkingDirectory=/opt/youtube-streamer/
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.wants
