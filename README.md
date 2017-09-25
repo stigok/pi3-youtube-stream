@@ -10,7 +10,15 @@ streamer service with ~9% CPU load.
 ## Usage
 Clone to `/opt/youtube-streamer`
 
-Run the remote audio binary on the remote computer. Start it with an argument
-for IP:PORT of the Pi running the streaming service.
+### On the remote audio box
 
-Set environment variables in streamer.env and start the service on the Pi.
+1. Start streaming the audio by running `rtp-audio-stream.sh $IP:1337`
+
+Where `$IP` is the IP address of the Pi.
+
+### On the Pi
+
+1. Set environment variables in `streamer.env`
+2. Update `audio.sdp` with the IP address of the remote audio source (replace `10.10.3.138`)
+2. Link service: `cp -s youtube-streamer.service /etc/systemd/system/ && systemctl daemon-reload`
+3. Start the service `systemctl start youtube-streamer.service`
