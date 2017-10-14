@@ -11,11 +11,12 @@ AUDIO_INPUT="-f alsa -i $ALSA_DEV -acodec mp3 -ar 48000"
 OUTPUT_STREAM="rtmp://a.rtmp.youtube.com/live2/$STREAM_KEY"
 
 # These values have proved to work good for me, with only initial warnings
-#AUDIO_ARGS='-thread_queue_size 128 -c:a mp3'
+#AUDIO_ARGS='-thread_queue_size 128'
 VIDEO_ARGS='-protocol_whitelist file'
-#-thread_queue_size 128 -fflags nobuffer'
+#VIDEO_ARGS='-protocol_whitelist file -thread_queue_size 128 -fflags nobuffer'
 
 FPS=30
+
 # YouTube 720p Optimals
 WIDTH=1280
 HEIGHT=720
@@ -28,6 +29,7 @@ VIDEO_BITRATE=4000000
 KEYFRAME_INTERVAL=$((FPS*2))
 
 # Start recording from Pi Camera
+# NOTE: Make sure /tmp is in memory and not writing to the SD-card
 mkfifo /tmp/vid || true
 raspivid -t 0 -w $WIDTH -h $HEIGHT -b $VIDEO_BITRATE -hf -vf -fps $FPS -lev 4.2 -fl -o /tmp/vid &
 
